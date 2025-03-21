@@ -15,36 +15,62 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo.gui.pages.common;
 
+import com.zebrunner.carina.demo.gui.components.ShopItem;
+import com.zebrunner.carina.demo.gui.pages.desktop.LoginPage;
+import com.zebrunner.carina.demo.gui.pages.desktop.SearchPage;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
-import com.zebrunner.carina.demo.gui.components.footer.FooterMenuBase;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 
+import java.util.List;
+
 public abstract class HomePageBase extends AbstractPage {
 
-    @FindBy(xpath = "//button[text()='Agree and proceed']")
-    private ExtendedWebElement acceptCookies;
 
     public HomePageBase(WebDriver driver) {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
     }
 
-    public abstract BrandModelsPageBase selectBrand(String brandName);
+    private ExtendedWebElement loginButton;
 
-    public abstract FooterMenuBase getFooterMenu();
+    private List<ShopItem> itemsList;
 
-    public abstract CompareModelsPageBase openComparePage();
+    public abstract List<ShopItem> getItemsList();
 
-    public abstract AllBrandsPageBase openAllBrandsPage();
+    private ExtendedWebElement searchButton;
+
+    public abstract ExtendedWebElement getLoginButton();
+
+    public abstract LoginPage getLoginPage();
+
+    public abstract SearchPage getSearchPage(String searchText);
+
+    private ExtendedWebElement button;
+
+    private ExtendedWebElement cartTotal;
+
+    private List<ExtendedWebElement> currencyList;
+
+    private ExtendedWebElement addToCartButton;
+
+    private ExtendedWebElement cartItemCount;
+
+    public abstract ExtendedWebElement getCartItemCount();
+
+    public abstract ExtendedWebElement getCartTotal();
+
+    public abstract ExtendedWebElement getAddToCartButton();
+
+    public abstract List<ExtendedWebElement> getCurrencyList();
+
+    public abstract ExtendedWebElement getButton();
 
     @Override
     public void open() {
         super.open();
-        acceptCookies.clickIfPresent(3);
     }
 
 }

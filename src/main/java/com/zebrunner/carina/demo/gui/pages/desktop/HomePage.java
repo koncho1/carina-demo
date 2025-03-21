@@ -18,17 +18,14 @@ package com.zebrunner.carina.demo.gui.pages.desktop;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
-import com.zebrunner.carina.demo.gui.pages.common.AllBrandsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.BrandModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.CompareModelsPageBase;
-import com.zebrunner.carina.demo.gui.pages.common.HomePageBase;
+import com.zebrunner.carina.demo.gui.components.ShopItem;
+import com.zebrunner.carina.demo.gui.pages.common.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.zebrunner.carina.demo.gui.components.footer.FooterMenu;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 
@@ -37,57 +34,87 @@ public class HomePage extends HomePageBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @FindBy(id = "footmenu")
-    private FooterMenu footerMenu;
+    @FindBy(xpath = "//div[contains(@class, 'thumbnails list-inline')]//div")
+    private List<ShopItem> itemsList;
 
-    @FindBy(xpath = "//div[contains(@class, 'brandmenu-v2')]//a")
-    private List<ExtendedWebElement> brandLinks;
+    public List<ShopItem> getItemsList(){
+        return this.itemsList;
+    }
 
-    @FindBys({ @FindBy(xpath = "//p[contains(@class, 'pad')]"), @FindBy(xpath = ".//*[contains(@class, 'pad-single')]") })
-    private ExtendedWebElement phoneFinderButton;
+    @FindBy(xpath = "//a[contains(@class, 'dropdown-toggle')]")
+    private ExtendedWebElement button;
 
-    @FindBy(className = "news-column-index")
-    private ExtendedWebElement newsColumn;
+    @FindBy(xpath = "//ul[contains(@class, 'dropdown-menu currency')]")
+    private List<ExtendedWebElement> currencyList;
 
-    @FindBy(xpath = "//span[text()='All brands']//parent::a")
-    private ExtendedWebElement allBrandsButton;
+    public List<ExtendedWebElement> getCurrencyList(){
+        return this.currencyList;
+    }
+
+    @FindBy (xpath = "//i[contains(@class, 'fa fa-cart-plus fa-fw')]")
+    private ExtendedWebElement addToCartButton;
+
+    public ExtendedWebElement getAddToCartButton(){
+        return this.addToCartButton;
+    }
+
+    @FindBy (xpath = "//div[contains(@class, 'block_7')]//span[contains(@class , 'label label-orange font14')]")
+    private ExtendedWebElement cartItemCount;
+
+    public ExtendedWebElement getCartItemCount(){
+        return this.cartItemCount;
+    }
+
+    @FindBy (xpath = "//span[contains(@class, 'cart_total')]")
+    private ExtendedWebElement cartTotal;
+
+    public ExtendedWebElement getCartTotal(){
+        return this.cartTotal;
+    }
+
+    @FindBy(xpath = "//div[contains(@class, 'navbar-header header-logo')]")
+    private ExtendedWebElement logo;
+
+    public ExtendedWebElement getButton(){
+        return this.button;
+    }
+
+    @FindBy (xpath="//a[text()='Login or register']")
+    private ExtendedWebElement loginButton;
+
+    @FindBy (xpath = "//input[contains(@name, 'filter_keyword')]")
+    private ExtendedWebElement searchField;
+
+    @FindBy (xpath = "//i[contains(@class, 'fa fa-search')]")
+    private ExtendedWebElement searchButton;
+
+    public ExtendedWebElement getLoginButton(){
+        return this.loginButton;
+    }
+
+    public LoginPage getLoginPage(){
+        loginButton.click();
+        return new LoginPage(driver);
+    }
+
+    public SearchPage getSearchPage(String searchText){
+        searchField.click();
+        searchField.type(searchText);
+        searchButton.click();
+        return new SearchPage(driver);
+    }
+
+
+
+
 
     public HomePage(WebDriver driver) {
         super(driver);
-        setUiLoadedMarker(newsColumn);
+        setUiLoadedMarker(logo);
     }
 
-    @Override
-    public FooterMenu getFooterMenu() {
-        return footerMenu;
-    }
 
-    @Override
-    public CompareModelsPageBase openComparePage() {
-        return getFooterMenu().openComparePage();
-    }
 
-    @Override
-    public BrandModelsPageBase selectBrand(String brand) {
-        LOGGER.info("selecting '" + brand + "' brand...");
-        for (ExtendedWebElement brandLink : brandLinks) {
-            String currentBrand = brandLink.getText();
-            LOGGER.info("currentBrand: " + currentBrand);
-            if (brand.equalsIgnoreCase(currentBrand)) {
-                brandLink.click();
-                return initPage(driver, BrandModelsPageBase.class);
-            }
-        }
-        throw new RuntimeException("Unable to open brand: " + brand);
-    }
 
-    public ExtendedWebElement getPhoneFinderButton() {
-        return phoneFinderButton;
-    }
-
-    public AllBrandsPageBase openAllBrandsPage(){
-        allBrandsButton.click();
-        return initPage(driver, AllBrandsPageBase.class);
-    }
 
 }
