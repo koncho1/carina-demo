@@ -16,12 +16,11 @@ public class SeachPageTest implements IAbstractTest {
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
         SearchPageBase searchPage= homePage.getSearchPage("Shirt");
         Assert.assertTrue(searchPage.isPageOpened());
-        String searchText = searchPage.getKeywordField().getAttribute("value");
-        Assert.assertEquals(searchText,"Shirt");
+        Assert.assertTrue(searchPage.isSearchTextCorrect("Shirt"));
     }
 
 
-    //Search for an unavaible item
+    //Search for an unavailable item
     @Test
     public void testUnsuccesfulSearch(){
         HomePageBase homePage = initPage(getDriver(), HomePageBase.class);
@@ -29,6 +28,6 @@ public class SeachPageTest implements IAbstractTest {
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
         SearchPageBase searchPage= homePage.getSearchPage("Apple");
         Assert.assertTrue(searchPage.isPageOpened());
-        Assert.assertTrue(searchPage.getNoProductMessage().isPresent());
+        Assert.assertTrue(searchPage.isNoProductMessagePresent());
     }
 }

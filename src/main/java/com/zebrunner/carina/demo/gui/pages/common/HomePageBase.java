@@ -15,8 +15,10 @@
  *******************************************************************************/
 package com.zebrunner.carina.demo.gui.pages.common;
 
+import com.zebrunner.carina.demo.gui.components.CategoryMenu;
 import com.zebrunner.carina.demo.gui.components.ShopItem;
 import com.zebrunner.carina.demo.gui.pages.desktop.LoginPage;
+import com.zebrunner.carina.demo.gui.pages.desktop.ProductPage;
 import com.zebrunner.carina.demo.gui.pages.desktop.SearchPage;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import org.openqa.selenium.WebDriver;
@@ -28,49 +30,51 @@ import java.util.List;
 
 public abstract class HomePageBase extends AbstractPage {
 
+    private ExtendedWebElement loginButton;
+
+    private List<ShopItem> itemsList;
+
+    private CategoryMenu categoryMenu;
+
+    private ExtendedWebElement searchButton;
+
+    private ExtendedWebElement currencySelector;
+
+    private ExtendedWebElement cartTotalText;
+
+    private List<ExtendedWebElement> currencyList;
+
+    private ExtendedWebElement addToCartButton;
+
+    private ExtendedWebElement cartItemCountLabel;
+
+    public abstract LoginPage getLoginPage();
+
+    public abstract SearchPage getSearchPage(String searchText);
+
+    public abstract boolean isCartTotalCorrect(String correctCartTotal);
+
+    public abstract void clickAddToCartButton();
+
+    public abstract boolean isCartItemCountCorrect(String correctItemCount);
+
+    public abstract void clickCurrencySelector();
+
+    public abstract ProductPage getProductPage();
+
+    public abstract void clickFirstItemInCurrencySelector();
+
+    public abstract boolean isCurrencyInCartCorrect(String currencySign);
+
+    @Override
+    public void open() {
+        super.open();
+    }
 
     public HomePageBase(WebDriver driver) {
         super(driver);
         setPageOpeningStrategy(PageOpeningStrategy.BY_ELEMENT);
     }
 
-    private ExtendedWebElement loginButton;
-
-    private List<ShopItem> itemsList;
-
-    public abstract List<ShopItem> getItemsList();
-
-    private ExtendedWebElement searchButton;
-
-    public abstract ExtendedWebElement getLoginButton();
-
-    public abstract LoginPage getLoginPage();
-
-    public abstract SearchPage getSearchPage(String searchText);
-
-    private ExtendedWebElement button;
-
-    private ExtendedWebElement cartTotal;
-
-    private List<ExtendedWebElement> currencyList;
-
-    private ExtendedWebElement addToCartButton;
-
-    private ExtendedWebElement cartItemCount;
-
-    public abstract ExtendedWebElement getCartItemCount();
-
-    public abstract ExtendedWebElement getCartTotal();
-
-    public abstract ExtendedWebElement getAddToCartButton();
-
-    public abstract List<ExtendedWebElement> getCurrencyList();
-
-    public abstract ExtendedWebElement getButton();
-
-    @Override
-    public void open() {
-        super.open();
-    }
 
 }

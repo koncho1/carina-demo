@@ -13,9 +13,9 @@ public abstract class SearchPageBase extends AbstractPage {
 
     private ExtendedWebElement noProductMessage;
 
-    public abstract ExtendedWebElement getNoProductMessage();
+    public abstract boolean isNoProductMessagePresent();
 
-    public abstract ExtendedWebElement getKeywordField();
+    public abstract boolean isSearchTextCorrect(String correctText);
 
     public SearchPageBase(WebDriver driver) {
         super(driver);

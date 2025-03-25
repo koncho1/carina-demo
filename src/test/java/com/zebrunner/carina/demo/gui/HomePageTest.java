@@ -21,11 +21,6 @@ import org.testng.annotations.Test;
 
 import com.zebrunner.carina.core.IAbstractTest;
 
-/**
- * This sample shows how create Web test.
- *
- * @author qpsdemo
- */
 public class HomePageTest implements IAbstractTest {
 
 
@@ -35,9 +30,9 @@ public class HomePageTest implements IAbstractTest {
         HomePageBase homePage = initPage(getDriver(), HomePageBase.class);
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
-        homePage.getButton().click();
-        homePage.getCurrencyList().get(0).click();
-        Assert.assertTrue(homePage.getCartTotal().getText().contains("£"));
+        homePage.clickCurrencySelector();
+        homePage.clickFirstItemInCurrencySelector();
+        Assert.assertTrue(homePage.isCurrencyInCartCorrect("£"));
     }
 
 
@@ -47,8 +42,8 @@ public class HomePageTest implements IAbstractTest {
         HomePageBase homePage = initPage(getDriver(), HomePageBase.class);
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
-        homePage.getAddToCartButton().click();
-        Assert.assertEquals(homePage.getCartTotal().getText(), "$29.50");
+        homePage.clickAddToCartButton();
+        Assert.assertTrue(homePage.isCartTotalCorrect("$29.50"));
     }
 
 
@@ -58,10 +53,10 @@ public class HomePageTest implements IAbstractTest {
         HomePageBase homePage = initPage(getDriver(), HomePageBase.class);
         homePage.open();
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
-        homePage.getAddToCartButton().click();
-        homePage.getAddToCartButton().click();
-        homePage.getAddToCartButton().click();
-        Assert.assertEquals(homePage.getCartItemCount().getText(),"3");
+        homePage.clickAddToCartButton();
+        homePage.clickAddToCartButton();
+        homePage.clickAddToCartButton();
+        Assert.assertTrue(homePage.isCartItemCountCorrect("3"));
 
     }
 

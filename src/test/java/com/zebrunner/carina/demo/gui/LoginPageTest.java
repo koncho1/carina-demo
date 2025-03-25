@@ -27,13 +27,10 @@ public class LoginPageTest implements IAbstractTest {
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
         LoginPageBase loginPage = homePage.getLoginPage();
         Assert.assertTrue(loginPage.isPageOpened());
-        ExtendedWebElement loginField= loginPage.getLoginField();
-        loginField.click();
-        loginField.type("abc");
-        loginPage.getPasswordField().click();
-        loginPage.getPasswordField().type("aaa");
-        loginPage.getLoginButton().click();
-        Assert.assertTrue(loginPage.getErrorMessage().isPresent());
+        loginPage.enterLogin("aaa");
+        loginPage.enterPassword("Abc");
+        loginPage.clickLoginButton();
+        Assert.assertTrue(loginPage.isErrorMessagePresent());
     }
 
 
@@ -45,12 +42,10 @@ public class LoginPageTest implements IAbstractTest {
         Assert.assertTrue(homePage.isPageOpened(), "Home page is not opened");
         LoginPageBase loginPage = homePage.getLoginPage();
         Assert.assertTrue(loginPage.isPageOpened());
-        loginPage.getForgotPasswordButton().click();
-        loginPage.getLoginField().click();
-        loginPage.getLoginField().type("aaa");
-        loginPage.getEmailField().click();
-        loginPage.getEmailField().type("abc@gmail.com");
-        loginPage.getContinueButton().click();
-        Assert.assertTrue(loginPage.getErrorMessage().isPresent());
+        loginPage.clickForgotPasswordButton();
+        loginPage.enterLogin("aaa");
+        loginPage.enterEmail("abc@gmail.com");
+        loginPage.clickContinueButton();
+        Assert.assertTrue(loginPage.isErrorMessagePresent());
     }
 }

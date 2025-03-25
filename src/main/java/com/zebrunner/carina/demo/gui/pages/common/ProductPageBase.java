@@ -1,22 +1,27 @@
 package com.zebrunner.carina.demo.gui.pages.common;
 
+import com.zebrunner.carina.demo.gui.components.CategoryMenu;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
 public abstract class ProductPageBase extends AbstractPage {
 
-    private ExtendedWebElement productName;
+    private ExtendedWebElement productNameLabel;
 
-    private ExtendedWebElement itemQuantity;
+    private ExtendedWebElement itemQuantityLabel;
 
-    public abstract ExtendedWebElement getItemQuantity();
+    private ExtendedWebElement totalPriceLabel;
 
-    private ExtendedWebElement totalPrice;
+    private CategoryMenu categoryMenu;
 
-    public abstract ExtendedWebElement getTotalPrice();
+    public abstract boolean isProductNamePresent();
 
-    public abstract ExtendedWebElement getProductName();
+    public abstract boolean isItemQuantityCorrect(String quantity);
+
+    public abstract boolean isTotalPriceCorrect(String price);
+
+    public abstract void enterNewItemQuantity(String newQuantity);
 
     public ProductPageBase(WebDriver driver) {
         super(driver);

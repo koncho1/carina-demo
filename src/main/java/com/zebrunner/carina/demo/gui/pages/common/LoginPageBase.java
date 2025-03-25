@@ -1,5 +1,6 @@
 package com.zebrunner.carina.demo.gui.pages.common;
 
+import com.zebrunner.carina.demo.gui.components.CategoryMenu;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.decorator.PageOpeningStrategy;
 import com.zebrunner.carina.webdriver.gui.AbstractPage;
@@ -16,31 +17,33 @@ public abstract class LoginPageBase extends AbstractPage {
 
     private ExtendedWebElement loginField;
 
-    public abstract ExtendedWebElement getLoginField();
-
     private ExtendedWebElement passwordField;
-
-    public abstract ExtendedWebElement getPasswordField();
 
     private ExtendedWebElement loginButton;
 
-    public abstract ExtendedWebElement getLoginButton();
+    private CategoryMenu categoryMenu;
 
     private ExtendedWebElement errorMessage;
 
-    public abstract ExtendedWebElement getErrorMessage();
-
     private ExtendedWebElement forgotPasswordButton;
-
-    public abstract ExtendedWebElement getForgotPasswordButton();
 
     private ExtendedWebElement emailField;
 
-    public abstract ExtendedWebElement getEmailField();
-
     private ExtendedWebElement continueButton;
 
-    public abstract ExtendedWebElement getContinueButton();
+    public abstract void clickForgotPasswordButton();
+
+    public abstract void enterLogin(String login);
+
+    public abstract void enterEmail(String email);
+
+    public abstract void clickContinueButton();
+
+    public abstract boolean isErrorMessagePresent();
+
+    public abstract void enterPassword(String password);
+
+    public abstract void clickLoginButton();
 
     @Override
     public void open() {

@@ -1,0 +1,6 @@
+{
+  "id": "skip",
+  "title": "type:String",
+  "body": "type:String",
+  "userId": "type:Integer"
+}

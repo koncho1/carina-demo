@@ -17,7 +17,9 @@ package com.zebrunner.carina.demo.gui.pages.desktop;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
 
+import com.zebrunner.carina.demo.gui.components.CategoryMenu;
 import com.zebrunner.carina.demo.gui.components.ShopItem;
 import com.zebrunner.carina.demo.gui.pages.common.*;
 import org.openqa.selenium.WebDriver;
@@ -34,50 +36,29 @@ public class HomePage extends HomePageBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    @FindBy (xpath= "//ul[contains(@class, 'nav-pills categorymenu'")
+    private CategoryMenu categoryMenu;
+
     @FindBy(xpath = "//div[contains(@class, 'thumbnails list-inline')]//div")
     private List<ShopItem> itemsList;
 
-    public List<ShopItem> getItemsList(){
-        return this.itemsList;
-    }
-
     @FindBy(xpath = "//a[contains(@class, 'dropdown-toggle')]")
-    private ExtendedWebElement button;
+    private ExtendedWebElement currencySelector;
 
     @FindBy(xpath = "//ul[contains(@class, 'dropdown-menu currency')]")
     private List<ExtendedWebElement> currencyList;
 
-    public List<ExtendedWebElement> getCurrencyList(){
-        return this.currencyList;
-    }
-
     @FindBy (xpath = "//i[contains(@class, 'fa fa-cart-plus fa-fw')]")
     private ExtendedWebElement addToCartButton;
 
-    public ExtendedWebElement getAddToCartButton(){
-        return this.addToCartButton;
-    }
-
     @FindBy (xpath = "//div[contains(@class, 'block_7')]//span[contains(@class , 'label label-orange font14')]")
-    private ExtendedWebElement cartItemCount;
-
-    public ExtendedWebElement getCartItemCount(){
-        return this.cartItemCount;
-    }
+    private ExtendedWebElement cartItemCountLabel;
 
     @FindBy (xpath = "//span[contains(@class, 'cart_total')]")
-    private ExtendedWebElement cartTotal;
-
-    public ExtendedWebElement getCartTotal(){
-        return this.cartTotal;
-    }
+    private ExtendedWebElement cartTotalText;
 
     @FindBy(xpath = "//div[contains(@class, 'navbar-header header-logo')]")
     private ExtendedWebElement logo;
-
-    public ExtendedWebElement getButton(){
-        return this.button;
-    }
 
     @FindBy (xpath="//a[text()='Login or register']")
     private ExtendedWebElement loginButton;
@@ -87,10 +68,6 @@ public class HomePage extends HomePageBase {
 
     @FindBy (xpath = "//i[contains(@class, 'fa fa-search')]")
     private ExtendedWebElement searchButton;
-
-    public ExtendedWebElement getLoginButton(){
-        return this.loginButton;
-    }
 
     public LoginPage getLoginPage(){
         loginButton.click();
@@ -104,9 +81,33 @@ public class HomePage extends HomePageBase {
         return new SearchPage(driver);
     }
 
+    public void clickAddToCartButton(){
+        addToCartButton.click();
+    }
 
+    public boolean isCartItemCountCorrect(String correctItemCount){
+        return Objects.equals(cartItemCountLabel.getText(), correctItemCount);
+    }
 
+    public boolean isCartTotalCorrect(String correctCartTotal){
+        return Objects.equals(cartTotalText.getText(),correctCartTotal);
+    }
 
+    public void clickCurrencySelector(){
+        currencySelector.click();
+    }
+
+    public void clickFirstItemInCurrencySelector(){
+        currencyList.get(0).click();
+    }
+
+    public boolean isCurrencyInCartCorrect(String currencySign){
+       return cartTotalText.getText().contains(currencySign);
+    }
+
+    public ProductPage getProductPage(){
+       return itemsList.get(0).getProductPage();
+    }
 
     public HomePage(WebDriver driver) {
         super(driver);

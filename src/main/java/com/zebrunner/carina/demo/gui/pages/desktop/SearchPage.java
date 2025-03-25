@@ -7,6 +7,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.Objects;
+
 @DeviceType(pageType = DeviceType.Type.DESKTOP, parentClass = HomePageBase.class)
 public class SearchPage extends SearchPageBase {
 
@@ -19,12 +21,13 @@ public class SearchPage extends SearchPageBase {
     @FindBy (xpath = "//div[contains(text(), 'There is no product that matches the search criteria.')]")
     private ExtendedWebElement noProductMessage;
 
-    public ExtendedWebElement getNoProductMessage() {
-        return noProductMessage;
+    public boolean isSearchTextCorrect(String correctText){
+        String keywordText=keywordField.getAttribute("value");
+        return Objects.equals(keywordText,correctText);
     }
 
-    public ExtendedWebElement getKeywordField(){
-        return this.keywordField;
+    public boolean isNoProductMessagePresent(){
+        return noProductMessage.isPresent();
     }
 
     public SearchPage(WebDriver driver) {
